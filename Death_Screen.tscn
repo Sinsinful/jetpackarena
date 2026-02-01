@@ -1,0 +1,116 @@
+[gd_scene load_steps=10 format=3 uid="uid://i7jnytphs4cm"]
+
+[ext_resource type="FontFile" uid="uid://d3sehgw7mqe7k" path="res://Fonts/PixelSplitter-Bold.ttf" id="1_3k51i"]
+[ext_resource type="Script" uid="uid://dx1lbl1t31dca" path="res://Scripts/death_screen.gd" id="1_abfs0"]
+[ext_resource type="Theme" uid="uid://d1bxp5apv7d1m" path="res://Fonts/Button_Fonts_Theam.tres" id="2_abfs0"]
+[ext_resource type="AudioStream" uid="uid://x46aon4opa4f" path="res://Audio/-M2- MATRIX Chip Bleep.wav" id="4_lk463"]
+[ext_resource type="AudioStream" uid="uid://187ws8lcgnky" path="res://Audio/JetPackArenaDeathMusic.wav" id="5_kpqtx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m3vfe"]
+font = ExtResource("1_3k51i")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_uxi3f"]
+font = ExtResource("1_3k51i")
+
+[sub_resource type="Theme" id="Theme_i0fgh"]
+default_font = ExtResource("1_3k51i")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsgm3"]
+bg_color = Color(0.947199, 0.947199, 0.947199, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_abfs0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -214.5
+offset_top = 32.0
+offset_right = 214.5
+offset_bottom = 89.0
+grow_horizontal = 2
+scale = Vector2(1.02072, 0.986575)
+text = "Jet Pack Arena"
+label_settings = SubResource("LabelSettings_m3vfe")
+
+[node name="YouDied" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.5
+offset_top = 96.0
+offset_right = 182.5
+offset_bottom = 119.0
+grow_horizontal = 2
+text = "You died but your legend in the arena 
+will  live on......."
+label_settings = SubResource("LabelSettings_uxi3f")
+
+[node name="Button_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_lk463")
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i0fgh")
+theme_override_font_sizes/font_size = 26
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_kpqtx")
+autoplay = true
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -140.0
+offset_right = 60.0
+offset_bottom = -109.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_abfs0")
+theme_override_colors/font_hover_pressed_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+theme_override_colors/font_color = Color(0.051971, 0.051971, 0.051971, 1)
+theme_override_fonts/font = ExtResource("1_3k51i")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qsgm3")
+text = "continue"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

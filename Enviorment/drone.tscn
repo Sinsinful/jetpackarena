@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://5064mucrugg6"]
+
+[ext_resource type="Script" uid="uid://c4jek8kymifyt" path="res://Scripts/drone.gd" id="1_6k0ii"]
+[ext_resource type="PackedScene" uid="uid://ctuk04r5fiemx" path="res://player_death_effect.tscn" id="2_faep4"]
+[ext_resource type="Texture2D" uid="uid://djkkmlvdaqk5u" path="res://Assets/Drone01.png" id="2_qhuq6"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qhuq6"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 1, 0)
+angle_min = -8.29999
+angle_max = 194.2
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 177.23
+orbit_velocity_min = -0.308
+orbit_velocity_max = 0.245
+gravity = Vector3(0, 25, 0)
+color = Color(1, 0.93321, 0.721522, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_faep4"]
+radius = 5.5
+height = 23.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhuq6"]
+size = Vector2(577, 653)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wi3ex"]
+radius = 13.0384
+
+[node name="Drone" type="CharacterBody2D"]
+script = ExtResource("1_6k0ii")
+death_effect_scene = ExtResource("2_faep4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qhuq6")
+
+[node name="JetpackFlame" type="GPUParticles2D" parent="Sprite2D"]
+position = Vector2(-10, 2)
+rotation = 0.359538
+scale = Vector2(2, 2)
+amount = 10
+explosiveness = 0.02
+randomness = 0.02
+process_material = SubResource("ParticleProcessMaterial_qhuq6")
+
+[node name="JetpackFlame2" type="GPUParticles2D" parent="Sprite2D"]
+position = Vector2(10, 2)
+rotation = 0.359538
+scale = Vector2(2, 2)
+amount = 10
+explosiveness = 0.02
+randomness = 0.02
+process_material = SubResource("ParticleProcessMaterial_qhuq6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 2.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_faep4")
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+position = Vector2(-5.5, 0.5)
+shape = SubResource("RectangleShape2D_qhuq6")
+debug_color = Color(0.931337, 0.237865, 0.288918, 0.42)
+
+[node name="ExplosionRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionRange"]
+shape = SubResource("CircleShape2D_wi3ex")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="MoveLoop" type="AudioStreamPlayer2D" parent="Audio"]
+
+[node name="ExplosionPoint" type="Marker2D" parent="."]

@@ -1,0 +1,586 @@
+[gd_scene format=3 uid="uid://ck0ju32i3wr44"]
+
+[ext_resource type="Script" uid="uid://cvvgymkvkmgr4" path="res://main.gd" id="1_c6i3y"]
+[ext_resource type="PackedScene" uid="uid://cl5yu4frju3ps" path="res://Enviorment/block_01.tscn" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://b5rexdxurg8po" path="res://control.gd" id="2_03owx"]
+[ext_resource type="Texture2D" uid="uid://bmddn47yurk4s" path="res://Assets/BGblock.png" id="2_c2ibq"]
+[ext_resource type="PackedScene" uid="uid://cpofpj24bp2m4" path="res://Player/player.tscn" id="2_r0du0"]
+[ext_resource type="Texture2D" uid="uid://buw54tqn3bn12" path="res://Assets/background1.png" id="2_sc1dx"]
+[ext_resource type="FontFile" uid="uid://d3sehgw7mqe7k" path="res://Fonts/PixelSplitter-Bold.ttf" id="2_trn2v"]
+[ext_resource type="Texture2D" uid="uid://bpljvgt8g1gmf" path="res://Assets/background2.png" id="3_kjvhd"]
+[ext_resource type="Script" uid="uid://cw2vlxwuuls43" path="res://Scripts/death_area_script.gd" id="3_r0du0"]
+[ext_resource type="Texture2D" uid="uid://oirm47ktw56v" path="res://Assets/DeathArea.png" id="4_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://cfjshfgbruda3" path="res://Enviorment/turret.tscn" id="5_fos0i"]
+[ext_resource type="PackedScene" uid="uid://ctuk04r5fiemx" path="res://player_death_effect.tscn" id="5_wkp8b"]
+[ext_resource type="AudioStream" uid="uid://b3g88ediovv0n" path="res://Audio/JetPackArenaLoop.wav" id="6_3dxm6"]
+[ext_resource type="Script" uid="uid://duvhr8atgdpgj" path="res://Scripts/camera_2d.gd" id="11_20pc6"]
+[ext_resource type="Script" uid="uid://d4mv0viu7svp2" path="res://Scripts/fuel_spawner.gd" id="12_5vvyt"]
+[ext_resource type="AudioStream" uid="uid://ddrdvqjhskqp3" path="res://Audio/fuel_pickup.wav" id="14_c2ibq"]
+[ext_resource type="Script" uid="uid://uhbgie7ojxho" path="res://Scripts/drone_spawner.gd" id="16_fpfj3"]
+
+[sub_resource type="Theme" id="Theme_03owx"]
+default_font = ExtResource("2_trn2v")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20pc6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0pq"]
+size = Vector2(641, 24.2077)
+
+[node name="Main" type="Node2D" unique_id=1758743876]
+script = ExtResource("1_c6i3y")
+
+[node name="Background1" type="Sprite2D" parent="." unique_id=1469019045]
+position = Vector2(383, -25)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_sc1dx")
+
+[node name="Background2" type="Sprite2D" parent="." unique_id=1900861220]
+position = Vector2(359, -29)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("3_kjvhd")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1442251449]
+texture_filter = 1
+offset_top = -407.0
+offset_right = 637.0
+offset_bottom = 488.0
+texture = ExtResource("2_c2ibq")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=938539625]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1976605621]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_03owx")
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control" unique_id=1108693141]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme = SubResource("Theme_03owx")
+text = "Score: 0"
+
+[node name="FuelLabel" type="Label" parent="CanvasLayer/Control" unique_id=2125994884]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -272.0
+offset_top = 16.0
+offset_right = -192.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme = SubResource("Theme_03owx")
+text = "Fuel:"
+
+[node name="FuelBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1681677844]
+layout_mode = 1
+offset_left = 102.0
+offset_top = 18.0
+offset_right = 210.0
+offset_bottom = 33.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_20pc6")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="Player" parent="." unique_id=1751106058 groups=["Player"] instance=ExtResource("2_r0du0")]
+position = Vector2(321, 408)
+jetpack_force = 1000.0
+death_effect_scene = ExtResource("5_wkp8b")
+
+[node name="Blocks" type="Node2D" parent="." unique_id=545497228]
+position = Vector2(281, 312)
+
+[node name="Block01" parent="Blocks" unique_id=1752326036 instance=ExtResource("1_uu6xs")]
+top_level = true
+light_mask = 2
+visibility_layer = 2
+position = Vector2(305, 440)
+
+[node name="Block02" parent="Blocks" unique_id=1873439816 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(337, 440)
+
+[node name="Block03" parent="Blocks" unique_id=1078954173 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 344)
+
+[node name="Block04" parent="Blocks" unique_id=1197443092 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 312)
+
+[node name="Block05" parent="Blocks" unique_id=433814794 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 280)
+
+[node name="Block06" parent="Blocks" unique_id=157164922 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 248)
+
+[node name="Block09" parent="Blocks" unique_id=1667335546 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 216)
+
+[node name="Block10" parent="Blocks" unique_id=1762186206 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 184)
+
+[node name="Block11" parent="Blocks" unique_id=1883497328 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 152)
+
+[node name="Block12" parent="Blocks" unique_id=294687655 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 120)
+
+[node name="Block13" parent="Blocks" unique_id=1837905000 instance=ExtResource("1_uu6xs")]
+top_level = true
+light_mask = 2
+visibility_layer = 2
+position = Vector2(304, 88)
+
+[node name="Block14" parent="Blocks" unique_id=1764899362 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(336, 88)
+
+[node name="Block71" parent="Blocks" unique_id=1840510468 instance=ExtResource("1_uu6xs")]
+top_level = true
+light_mask = 2
+visibility_layer = 2
+position = Vector2(144, -144)
+
+[node name="Block72" parent="Blocks" unique_id=1558353734 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(176, -144)
+
+[node name="Block73" parent="Blocks" unique_id=250153776 instance=ExtResource("1_uu6xs")]
+top_level = true
+light_mask = 2
+visibility_layer = 2
+position = Vector2(464, -144)
+
+[node name="Block74" parent="Blocks" unique_id=652716721 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(496, -144)
+
+[node name="Block15" parent="Blocks" unique_id=1241055829 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 88)
+
+[node name="Block16" parent="Blocks" unique_id=1457433188 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 56)
+
+[node name="Block75" parent="Blocks" unique_id=1728053167 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 664)
+
+[node name="Block76" parent="Blocks" unique_id=1664361433 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 632)
+
+[node name="Block77" parent="Blocks" unique_id=501777786 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 600)
+
+[node name="Block78" parent="Blocks" unique_id=569692689 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 568)
+
+[node name="Block79" parent="Blocks" unique_id=1585945945 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 536)
+
+[node name="Block80" parent="Blocks" unique_id=964378005 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 504)
+
+[node name="Block81" parent="Blocks" unique_id=1180759874 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 472)
+
+[node name="Block82" parent="Blocks" unique_id=1606112028 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 440)
+
+[node name="Block83" parent="Blocks" unique_id=57199286 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 408)
+
+[node name="Block84" parent="Blocks" unique_id=1745806085 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 376)
+
+[node name="Block85" parent="Blocks" unique_id=1908159067 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 664)
+
+[node name="Block86" parent="Blocks" unique_id=363402359 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 632)
+
+[node name="Block87" parent="Blocks" unique_id=2021716730 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 600)
+
+[node name="Block88" parent="Blocks" unique_id=1945041869 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 568)
+
+[node name="Block89" parent="Blocks" unique_id=1651475744 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 536)
+
+[node name="Block90" parent="Blocks" unique_id=446677952 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 504)
+
+[node name="Block91" parent="Blocks" unique_id=1452736759 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 472)
+
+[node name="Block92" parent="Blocks" unique_id=2052983736 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 440)
+
+[node name="Block93" parent="Blocks" unique_id=585434610 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 408)
+
+[node name="Block94" parent="Blocks" unique_id=1539053062 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 376)
+
+[node name="Block17" parent="Blocks" unique_id=467633666 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, 24)
+
+[node name="Block18" parent="Blocks" unique_id=240068194 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -8)
+
+[node name="Block07" parent="Blocks" unique_id=265212073 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -40)
+
+[node name="Block08" parent="Blocks" unique_id=2109780017 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -72)
+
+[node name="Block31" parent="Blocks" unique_id=1479798353 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -104)
+
+[node name="Block32" parent="Blocks" unique_id=1900948494 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -136)
+
+[node name="Block33" parent="Blocks" unique_id=1136048784 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -168)
+
+[node name="Block34" parent="Blocks" unique_id=1118975699 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -200)
+
+[node name="Block35" parent="Blocks" unique_id=433290430 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -232)
+
+[node name="Block36" parent="Blocks" unique_id=504429908 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -264)
+
+[node name="Block37" parent="Blocks" unique_id=1635150189 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -296)
+
+[node name="Block38" parent="Blocks" unique_id=1147438779 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -328)
+
+[node name="Block39" parent="Blocks" unique_id=1383880381 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -360)
+
+[node name="Block40" parent="Blocks" unique_id=1227133274 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(16, -392)
+
+[node name="Block53" parent="Blocks" unique_id=132435544 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(48, -392)
+
+[node name="Block54" parent="Blocks" unique_id=1539236721 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(80, -392)
+
+[node name="Block55" parent="Blocks" unique_id=511678168 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(112, -392)
+
+[node name="Block56" parent="Blocks" unique_id=1745044821 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(144, -392)
+
+[node name="Block57" parent="Blocks" unique_id=210040584 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(176, -392)
+
+[node name="Block58" parent="Blocks" unique_id=1986891506 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(208, -392)
+
+[node name="Block59" parent="Blocks" unique_id=20636883 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(240, -392)
+
+[node name="Block60" parent="Blocks" unique_id=306993246 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(272, -392)
+
+[node name="Block61" parent="Blocks" unique_id=139820774 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(304, -392)
+
+[node name="Block62" parent="Blocks" unique_id=747430675 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(336, -392)
+
+[node name="Block63" parent="Blocks" unique_id=622006172 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(368, -392)
+
+[node name="Block64" parent="Blocks" unique_id=1424664178 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(400, -392)
+
+[node name="Block65" parent="Blocks" unique_id=426564304 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(432, -392)
+
+[node name="Block66" parent="Blocks" unique_id=783246767 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(464, -392)
+
+[node name="Block67" parent="Blocks" unique_id=1265310664 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(496, -392)
+
+[node name="Block68" parent="Blocks" unique_id=1968540695 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(528, -392)
+
+[node name="Block69" parent="Blocks" unique_id=464763552 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(560, -392)
+
+[node name="Block70" parent="Blocks" unique_id=1825764432 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(592, -392)
+
+[node name="Block41" parent="Blocks" unique_id=1754362091 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -40)
+
+[node name="Block42" parent="Blocks" unique_id=1442919844 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -72)
+
+[node name="Block43" parent="Blocks" unique_id=66877005 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -104)
+
+[node name="Block44" parent="Blocks" unique_id=1332806487 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -136)
+
+[node name="Block45" parent="Blocks" unique_id=580579328 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -168)
+
+[node name="Block46" parent="Blocks" unique_id=1500588488 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -200)
+
+[node name="Block47" parent="Blocks" unique_id=1370206456 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -232)
+
+[node name="Block48" parent="Blocks" unique_id=564698314 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -264)
+
+[node name="Block49" parent="Blocks" unique_id=1646164855 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -296)
+
+[node name="Block50" parent="Blocks" unique_id=216875307 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -328)
+
+[node name="Block51" parent="Blocks" unique_id=779225242 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -360)
+
+[node name="Block52" parent="Blocks" unique_id=579472170 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -392)
+
+[node name="Block19" parent="Blocks" unique_id=1750324403 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 344)
+
+[node name="Block20" parent="Blocks" unique_id=74155125 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 312)
+
+[node name="Block21" parent="Blocks" unique_id=1635647237 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 280)
+
+[node name="Block22" parent="Blocks" unique_id=1396970137 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 248)
+
+[node name="Block23" parent="Blocks" unique_id=792544943 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 216)
+
+[node name="Block24" parent="Blocks" unique_id=1708912446 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 184)
+
+[node name="Block25" parent="Blocks" unique_id=388912922 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 152)
+
+[node name="Block26" parent="Blocks" unique_id=171707300 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 120)
+
+[node name="Block27" parent="Blocks" unique_id=91649821 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 88)
+
+[node name="Block28" parent="Blocks" unique_id=1445181874 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 56)
+
+[node name="Block29" parent="Blocks" unique_id=1959749089 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, 24)
+
+[node name="Block30" parent="Blocks" unique_id=146115621 instance=ExtResource("1_uu6xs")]
+top_level = true
+position = Vector2(624, -8)
+
+[node name="DeathArea" type="Area2D" parent="." unique_id=1586021742]
+position = Vector2(320, 576)
+scale = Vector2(1, 6.66279)
+script = ExtResource("3_r0du0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea" unique_id=1696987608]
+position = Vector2(-0.5, -1.10384)
+shape = SubResource("RectangleShape2D_cm0pq")
+
+[node name="Sprite2D" type="Sprite2D" parent="DeathArea" unique_id=927253838]
+position = Vector2(0, 1.39616)
+scale = Vector2(1, 0.91274)
+texture = ExtResource("4_cm0pq")
+
+[node name="Turrets" type="Node2D" parent="." unique_id=853556527]
+position = Vector2(321, 408)
+
+[node name="Turret" parent="Turrets" unique_id=1145564274 instance=ExtResource("5_fos0i")]
+position = Vector2(-286, -128)
+rotation = 1.5708
+fire_cooldown = 2.2
+
+[node name="Turret2" parent="Turrets" unique_id=1175235978 instance=ExtResource("5_fos0i")]
+position = Vector2(-286, -416)
+rotation = 1.5708
+fire_cooldown = 1.1
+activation_delay = 5.0
+
+[node name="Turret3" parent="Turrets" unique_id=947358393 instance=ExtResource("5_fos0i")]
+position = Vector2(-286, -703)
+rotation = 1.5708
+fire_cooldown = 2.8
+activation_delay = 10.0
+
+[node name="Turret4" parent="Turrets" unique_id=734140473 instance=ExtResource("5_fos0i")]
+position = Vector2(283, -703)
+rotation = 1.5708
+fire_cooldown = 0.8
+activation_delay = 15.0
+
+[node name="Turret5" parent="Turrets" unique_id=1578835030 instance=ExtResource("5_fos0i")]
+position = Vector2(283, -415)
+rotation = 1.5708
+fire_cooldown = 2.3
+activation_delay = 20.0
+
+[node name="Turret6" parent="Turrets" unique_id=776168343 instance=ExtResource("5_fos0i")]
+position = Vector2(283, -127)
+rotation = 1.5708
+activation_delay = 30.0
+
+[node name="MusicLoop" type="AudioStreamPlayer2D" parent="." unique_id=22442213]
+stream = ExtResource("6_3dxm6")
+volume_db = -7.495
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1968362852 node_paths=PackedStringArray("target")]
+position = Vector2(321, 408)
+position_smoothing_enabled = true
+script = ExtResource("11_20pc6")
+target = NodePath("../Player")
+
+[node name="FuelSpawner" type="Node" parent="." unique_id=374336152]
+script = ExtResource("12_5vvyt")
+
+[node name="SpawnPoint01" type="Marker2D" parent="FuelSpawner" unique_id=1550792584]
+position = Vector2(166, -168)
+
+[node name="SpawnPoint02" type="Marker2D" parent="FuelSpawner" unique_id=1139061633]
+position = Vector2(480, -168)
+
+[node name="SpawnPoint03" type="Marker2D" parent="FuelSpawner" unique_id=1040556960]
+position = Vector2(321, 64)
+
+[node name="SpawnPoint04" type="Marker2D" parent="FuelSpawner" unique_id=1443445209]
+position = Vector2(321, 414)
+
+[node name="FuelPickupSound" type="AudioStreamPlayer2D" parent="." unique_id=840437358]
+stream = ExtResource("14_c2ibq")
+
+[node name="DroneSpawner" type="Node" parent="." unique_id=1445492334]
+script = ExtResource("16_fpfj3")
+
+[node name="SpawnPoint01" type="Marker2D" parent="DroneSpawner" unique_id=1169862896]
+position = Vector2(131, 529)
+
+[node name="SpawnPoint02" type="Marker2D" parent="DroneSpawner" unique_id=499830298]
+position = Vector2(526, 533)
+
+[connection signal="body_entered" from="DeathArea" to="DeathArea" method="_on_body_entered"]

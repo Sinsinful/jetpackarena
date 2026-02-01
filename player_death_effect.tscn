@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctuk04r5fiemx"]
+
+[ext_resource type="Script" uid="uid://ckhcyxupyb22t" path="res://Scripts/explosion_particles.gd" id="1_tvq2d"]
+[ext_resource type="AudioStream" uid="uid://bf7x13b7piyfo" path="res://Audio/Bluezone-BC0214-explosion-002.wav" id="2_ant6x"]
+
+[sub_resource type="Gradient" id="Gradient_tvq2d"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.933333, 0.721569, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ant6x"]
+gradient = SubResource("Gradient_tvq2d")
+
+[sub_resource type="Curve" id="Curve_uhsel"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(0.971429, 0.0224719), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_juje7"]
+curve = SubResource("Curve_uhsel")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4dyda"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+direction = Vector3(1, 1, 1)
+spread = 122.143
+initial_velocity_max = 241.67
+gravity = Vector3(0, 50, 0)
+damping_max = 0.1
+scale_min = 0.5
+scale_max = 1.2
+scale_curve = SubResource("CurveTexture_juje7")
+color = Color(1, 0.933333, 0.721569, 1)
+color_ramp = SubResource("GradientTexture1D_ant6x")
+
+[node name="PlayerDeathEffect" type="Node2D"]
+
+[node name="ExplosionParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 200
+lifetime = 1.18
+one_shot = true
+speed_scale = 0.9
+explosiveness = 1.0
+randomness = 0.4
+process_material = SubResource("ParticleProcessMaterial_4dyda")
+script = ExtResource("1_tvq2d")
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ant6x")

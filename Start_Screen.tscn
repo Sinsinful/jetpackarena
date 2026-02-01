@@ -1,0 +1,113 @@
+[gd_scene load_steps=9 format=3 uid="uid://cb06u6k4kif87"]
+
+[ext_resource type="Script" uid="uid://4tpryb5frlc3" path="res://Scripts/start_screen_script.gd" id="1_q5oj5"]
+[ext_resource type="FontFile" uid="uid://d3sehgw7mqe7k" path="res://Fonts/PixelSplitter-Bold.ttf" id="2_y7cqw"]
+[ext_resource type="Theme" uid="uid://d1bxp5apv7d1m" path="res://Fonts/Button_Fonts_Theam.tres" id="3_4og4g"]
+[ext_resource type="AudioStream" uid="uid://b4tdp6bmoswq7" path="res://Audio/JetPackArenaTheam.wav" id="4_dj0k1"]
+[ext_resource type="AudioStream" uid="uid://x46aon4opa4f" path="res://Audio/-M2- MATRIX Chip Bleep.wav" id="5_huokf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m3vfe"]
+font = ExtResource("2_y7cqw")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_uxi3f"]
+font = ExtResource("2_y7cqw")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gj7lo"]
+bg_color = Color(0.947199, 0.947199, 0.947199, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q5oj5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -214.5
+offset_top = 32.0
+offset_right = 214.5
+offset_bottom = 89.0
+grow_horizontal = 2
+scale = Vector2(1.02072, 0.986575)
+text = "Jet Pack Arena"
+label_settings = SubResource("LabelSettings_m3vfe")
+
+[node name="Plot" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.5
+offset_top = 96.0
+offset_right = 182.5
+offset_bottom = 119.0
+grow_horizontal = 2
+text = "How long can you surive in the arena?"
+label_settings = SubResource("LabelSettings_uxi3f")
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -15.5
+offset_right = 48.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_4og4g")
+theme_override_colors/font_hover_pressed_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+theme_override_colors/font_hover_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+theme_override_colors/font_color = Color(0.051971, 0.051971, 0.051971, 1)
+theme_override_fonts/font = ExtResource("2_y7cqw")
+theme_override_styles/normal = SubResource("StyleBoxFlat_gj7lo")
+text = "Start Game"
+
+[node name="Theam_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dj0k1")
+autoplay = true
+playback_type = 1
+
+[node name="Button_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_huokf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -129.0
+offset_top = -134.0
+offset_right = 129.0
+offset_bottom = -59.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_y7cqw")
+text = "Jetpack = Space or Controller A
+Move Left = A or Controller Left
+Move Right = D or Controller Right"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
